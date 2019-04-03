@@ -17,6 +17,8 @@ public class Game
   int[] quitRect = {440, 570, 660, 630};
   
   int incorrectGuesses = 0;
+  char[] hangManWord;
+  char[] playerWord;
   
   // The values of each letter eg a = 1, b = 3, etc
   private final int[] LETTER_SCORES = {
@@ -30,11 +32,17 @@ public class Game
     isRunning = false;
   }
   
-  public void init()
+  public void init(String word_in)
   {
     titleBG = loadImage(background[0]);
     gameBG = loadImage(background[1]);
     currentBG = titleBG;
+    hangManWord = word_in.toCharArray();
+    playerWord = new char[hangManWord.length];
+    
+    for(int i = 0; i < hangManWord.length; i++)
+      playerWord[i] = ' ';
+
   }
   
   public void mouseRelease()
@@ -109,13 +117,13 @@ public class Game
     int y1 = hitBox[1];
     int y2 = hitBox[3];
     //{440, 335, 660, 275};
-    stroke(255, 0, 0);
+    stroke(0, 0, 0);
     line(x1, y1, x1, y2);
-    stroke(0, 255, 0);
+    stroke(0, 0, 0);
     line(x1, y2, x2, y2);
-    stroke(0, 0, 255);
+    stroke(0, 0, 0);
     line(x2, y2, x2, y1);
-    stroke(255, 255, 0);
+    stroke(0, 0, 0);
     line(x2, y1, x1, y1);
   }
   
@@ -123,6 +131,31 @@ public class Game
   {
     char upper = Character.toUpperCase(letter);
     return LETTER_SCORES[upper - 'A'];
+  }
+  
+  public void keyRelease()
+  {
+    boolean inWord = false;
+    //Uses global "key" variable from processing
+    //ex: System.out.println(key);
+    for(int i = 0; i < hangManWord.length; i++)
+    {
+      if(Character.toLowerCase(key) == Character.toLowerCase(hangManWord[i]))
+      {
+        playerWord[i] = hangManWord[i];
+        inWord = true;
+      } 
+    }
+    
+    if(!inWord)
+      incorrectGuesses++;
+      
+    //The rest of this method just prints to console to see whats going on
+    for(char c : playerWord)
+      System.out.print(c);
+      
+    System.out.print("\tIncorrect Guesses:" + incorrectGuesses);
+    System.out.println();
   }
   
 }//End game
