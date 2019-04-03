@@ -18,7 +18,7 @@ void setup()
   
   //Game setup
   game = new Game();
-  game.init();
+  game.init("Avocado");
   
   //Text stuff
   f = createFont("arial", 16);
@@ -47,8 +47,11 @@ void mouseReleased()
   game.mouseRelease();
 }
 
+/*  65-90 Capital letters
+    97-122 lowercase letters
+*/
 void keyReleased()
 {
-
-  
+  if((key >= 65 && key <= 90) || (key >= 97 && key <= 122))
+      game.keyRelease();
 }
