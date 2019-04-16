@@ -32,8 +32,8 @@ void draw()
  
    //Draw text data
    fill(255, 0, 255);
-   String s1 = "(" + mouseX + ", " + mouseY +") ";
-   text(s1, textX, textY);
+   //String s1 = "(" + mouseX + ", " + mouseY +") ";
+   //text(s1, textX, textY);
 }
 
 void mousePressed()

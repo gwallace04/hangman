@@ -18,7 +18,12 @@ public class Game
   
   int incorrectGuesses = 0;
   char[] hangManWord;
-  char[] playerWord;
+  String[] playerWord;
+  String[] phrases;
+  int phraseIndex;
+  String phrase;
+  String coded_phrase = "";
+  IntDict letters_in_phrase;
   
   // The values of each letter eg a = 1, b = 3, etc
   private final int[] LETTER_SCORES = {
@@ -37,11 +42,22 @@ public class Game
     titleBG = loadImage(background[0]);
     gameBG = loadImage(background[1]);
     currentBG = titleBG;
-    hangManWord = word_in.toCharArray();
-    playerWord = new char[hangManWord.length];
+    phrases = loadStrings("Phrases.txt");
+    phraseIndex = int(random(phrases.length));
+    phrase = phrases[phraseIndex];
+    for (int i = 0; i < phrase.length(); i++) {
+      //if (phrase[i].match(/[a-z]/i)); //Check if letter
+      if (phrase.charAt(i) == ' ') coded_phrase += "/ ";
+      else coded_phrase += "_ ";
+    }
+    hangManWord = phrase.toCharArray();
+    playerWord = new String[hangManWord.length];
     
     for(int i = 0; i < hangManWord.length; i++)
-      playerWord[i] = ' ';
+      if (hangManWord[i] == ' ') playerWord[i] = "/";
+      else if (hangManWord[i] == '\'') playerWord[i] = "'";
+      else playerWord[i] = "_";
+      //playerWord[i] = ' ';
 
   }
   
@@ -66,6 +82,9 @@ public class Game
     exit();
     }
   }//End if !isRunning
+  else {
+    incorrectGuesses += 1;
+  }
   }
   
   public void update()
@@ -74,7 +93,9 @@ public class Game
     //
     if(isRunning)
     {
-      
+      //String output = new String(playerWord);
+      text(incorrectGuesses, 50, 50);
+      text(join(playerWord, " "), 50, 100);
       
     }
     else //Show the title screen
@@ -142,7 +163,7 @@ public class Game
     {
       if(Character.toLowerCase(key) == Character.toLowerCase(hangManWord[i]))
       {
-        playerWord[i] = hangManWord[i];
+        playerWord[i] = str(hangManWord[i]);
         inWord = true;
       } 
     }
@@ -151,8 +172,8 @@ public class Game
       incorrectGuesses++;
       
     //The rest of this method just prints to console to see whats going on
-    for(char c : playerWord)
-      System.out.print(c);
+    //for(char c : playerWord)
+    //  System.out.print(c);
       
     System.out.print("\tIncorrect Guesses:" + incorrectGuesses);
     System.out.println();
