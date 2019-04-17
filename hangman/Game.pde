@@ -18,7 +18,13 @@ public class Game
   
   int incorrectGuesses = 0;
   char[] hangManWord;
-  char[] playerWord;
+  String[] playerWord;
+  String[] phrases;
+  int phraseIndex;
+  String phrase;
+  int totalLetters;
+  int correctGuesses;
+  char[] guessedLetters = {};
   
   // The values of each letter eg a = 1, b = 3, etc
   private final int[] LETTER_SCORES = {
@@ -37,11 +43,20 @@ public class Game
     titleBG = loadImage(background[0]);
     gameBG = loadImage(background[1]);
     currentBG = titleBG;
-    hangManWord = word_in.toCharArray();
-    playerWord = new char[hangManWord.length];
+    phrases = loadStrings("Phrases.txt");
+    phraseIndex = int(random(phrases.length));
+    phrase = phrases[phraseIndex];
+    hangManWord = phrase.toCharArray();
+    playerWord = new String[hangManWord.length];
     
     for(int i = 0; i < hangManWord.length; i++)
-      playerWord[i] = ' ';
+      if (hangManWord[i] == ' ') playerWord[i] = "/";
+      else if (hangManWord[i] == '\'') playerWord[i] = "'";
+      else if (hangManWord[i] == ',') playerWord[i] = ",";
+      else {
+        playerWord[i] = "_";
+        totalLetters += 1;
+      }
 
   }
   
@@ -66,6 +81,9 @@ public class Game
     exit();
     }
   }//End if !isRunning
+  else {
+    
+  }
   }
   
   public void update()
@@ -74,7 +92,11 @@ public class Game
     //
     if(isRunning)
     {
-      
+      //String output = new String(playerWord);
+      text(incorrectGuesses, 50, 50);
+      text(join(playerWord, " "), 50, 100);
+      if (incorrectGuesses >= 6) text("You lose", 50, 200);
+      if (correctGuesses == totalLetters) text("You win", 50, 150);
       
     }
     else //Show the title screen
@@ -136,23 +158,33 @@ public class Game
   public void keyRelease()
   {
     boolean inWord = false;
+    boolean alreadyGuessed = false;
     //Uses global "key" variable from processing
     //ex: System.out.println(key);
-    for(int i = 0; i < hangManWord.length; i++)
-    {
-      if(Character.toLowerCase(key) == Character.toLowerCase(hangManWord[i]))
+    for(int i = 0; i < guessedLetters.length; i++) {
+      if(Character.toLowerCase(key) == Character.toLowerCase(guessedLetters[i]))
       {
-        playerWord[i] = hangManWord[i];
-        inWord = true;
-      } 
+        alreadyGuessed = true;
+        break;
+      }
     }
-    
-    if(!inWord)
-      incorrectGuesses++;
+    if (alreadyGuessed == false) {
+      guessedLetters = append(guessedLetters, Character.toLowerCase(key));
+      for(int i = 0; i < hangManWord.length; i++)
+      {
+        if(Character.toLowerCase(key) == Character.toLowerCase(hangManWord[i]))
+        {
+          playerWord[i] = str(hangManWord[i]);
+          correctGuesses += 1;
+          inWord = true;
+        } 
+      }
+      if(!inWord) incorrectGuesses++;
+    }
       
     //The rest of this method just prints to console to see whats going on
-    for(char c : playerWord)
-      System.out.print(c);
+    //for(char c : playerWord)
+    //  System.out.print(c);
       
     System.out.print("\tIncorrect Guesses:" + incorrectGuesses);
     System.out.println();
