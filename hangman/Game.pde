@@ -10,6 +10,7 @@ public class Game
   PImage titleBG, gameBG, currentBG;
   
   boolean isRunning;
+  boolean isScoreScreen;
   
   //Title screen hitboxes 220x60
   int[] newGameRect = {440, 335, 660, 395};
@@ -38,7 +39,7 @@ public class Game
     isRunning = false;
   }
   
-  public void init(String word_in)
+  public void init()
   {
     titleBG = loadImage(background[0]);
     gameBG = loadImage(background[1]);
@@ -105,6 +106,9 @@ public class Game
         String score = str(getScore(phrase));
         text("Score: " + score, 50, 225);
       }
+      
+    } 
+    else if (isScoreScreen) {
       
     }
     else //Show the title screen
