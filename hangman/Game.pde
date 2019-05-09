@@ -95,8 +95,16 @@ public class Game
       //String output = new String(playerWord);
       text(incorrectGuesses, 50, 50);
       text(join(playerWord, " "), 50, 100);
-      if (incorrectGuesses >= 6) text("You lose", 50, 200);
-      if (correctGuesses == totalLetters) text("You win", 50, 150);
+      if (incorrectGuesses >= 6) {
+        text("You lose", 50, 200);
+        String score = str(getScore(phrase));
+        text("Score: " + score, 50, 225);
+      }
+      if (correctGuesses == totalLetters) {
+        text("You win", 50, 150);
+        String score = str(getScore(phrase));
+        text("Score: " + score, 50, 225);
+      }
       
     }
     else //Show the title screen
@@ -110,15 +118,15 @@ public class Game
     }
   }
   
-  public int getScore(String word) 
+  public float getScore(String word) 
   {
-    int wordScore = 0;
-    int score = 0;
+    float wordScore = 0;
+    float score = 0;
     for(char letter: word.toCharArray()) 
     {
       wordScore += getLetterScore(letter);
     }
-    score = wordScore / (incorrectGuesses + 1);
+    score = (float) wordScore / (incorrectGuesses + correctGuesses + 1);
     score *= 100;
     return score;
   }
@@ -151,8 +159,12 @@ public class Game
   
   private int getLetterScore(char letter) 
   {
-    char upper = Character.toUpperCase(letter);
-    return LETTER_SCORES[upper - 'A'];
+    char lower = Character.toLowerCase(letter);
+    if (Character.isLetterOrDigit(lower)) {
+      return LETTER_SCORES[lower - 'a'];
+    } else {
+      return 0;
+    }
   }
   
   public void keyRelease()
