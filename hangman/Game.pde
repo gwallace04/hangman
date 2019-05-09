@@ -21,6 +21,7 @@ public class Game
   char[] hangManWord;
   String[] playerWord;
   String[] phrases;
+  String[] scores;
   int phraseIndex;
   String phrase;
   int totalLetters;
@@ -75,6 +76,8 @@ public class Game
     else if(inHitBox(scoreRect)) 
     {
     //show scores
+    isScoreScreen = true;
+    isRunning = false;
     }
   
     else if(inHitBox(quitRect)) 
@@ -109,6 +112,9 @@ public class Game
       
     } 
     else if (isScoreScreen) {
+      //image("scores+background.png", 0, 0);
+      background(255);
+      scores = loadStrings("Scores.txt");
       
     }
     else //Show the title screen
