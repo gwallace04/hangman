@@ -2,15 +2,20 @@
 
 
 */
-
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game
 {
-  String[] background = {"titlescreen.png", "title+background(life-6).png", "title+background(life-5).png", "title+background(life-3).png", "background(life-2).png", "background(life-1).png", "background.png"};
-  PImage titleBG, gameBG, currentBG, scoreBG, life1, life2, life3, life4, life5;
+  String[] background = {"titlescreen.png", "title+background(life-6).png", "title+background(life-5).png", "title+background(life-3).png", 
+                        "background(life-2).png", "background(life-1).png", "background.png", "end+background.png"};
+  PImage titleBG, gameBG, currentBG, scoreBG, endGameBG, life1, life2, life3, life4, life5;
   
   boolean isRunning;
   boolean isScoreScreen;
+  boolean isGameEnd;
+  boolean gameWon;
+  boolean updated;
   
   //Title screen hitboxes 220x60
   int[] newGameRect = {440, 335, 660, 395};
@@ -49,6 +54,7 @@ public class Game
     life3 = loadImage(background[4]);
     life4 = loadImage(background[5]);
     life5 = loadImage(background[6]);
+    endGameBG = loadImage(background[7]);
     currentBG = titleBG;
     scoreBG = loadImage("scores+background.png");
     phrases = loadStrings("Phrases.txt");
@@ -90,9 +96,6 @@ public class Game
     {
     exit();
     }
-  }//End if !isRunning
-  else {
-    
   }
   }
   
@@ -111,14 +114,20 @@ public class Game
       else if (incorrectGuesses == 4) currentBG = life4;
       else if (incorrectGuesses == 5) currentBG = life5;
       if (incorrectGuesses >= 6) {
-        text("You lose", 50, 200);
-        String score = str(getScore(phrase));
-        text("Score: " + score, 50, 225);
+        //text("You lose", 50, 200);
+        //String score = str(getScore(phrase));
+        //text("Score: " + score, 50, 225);
+        isGameEnd = true;
+        gameWon = false;
+        isRunning = false;
       }
       if (correctGuesses == totalLetters) {
-        text("You win", 50, 150);
-        String score = str(getScore(phrase));
-        text("Score: " + score, 50, 225);
+        //text("You win", 50, 150);
+        //String score = str(getScore(phrase));
+        //text("Score: " + score, 50, 225);
+        isGameEnd = true;
+        gameWon = true;
+        isRunning = false;
       }
       
     } 
@@ -146,6 +155,10 @@ public class Game
       }
       
     }
+    else if(isGameEnd)
+    {
+      endGame();
+    }
     else //Show the title screen
     {   
     /* These checks only highlight on mouse over
@@ -155,6 +168,43 @@ public class Game
     else if(inHitBox(scoreRect)) drawBox(scoreRect);
     else if(inHitBox(quitRect)) drawBox(quitRect);
     }
+  }
+  
+  private void endGame()
+  {
+    String score = str(getScore(phrase));
+    image(endGameBG, 0, 0);
+    String msg = "Nothing";
+    String[] allStr = loadStrings("Scores.txt");
+    ArrayList<String> myList = new ArrayList<String>(Arrays.asList(allStr));
+
+    myList.add(score);
+    allStr = myList.toArray(allStr);
+    allStr = reverse(sort(allStr));
+    
+    if(gameWon)
+      msg = "You won!";
+      
+    else msg = "You lost!";
+
+    image(endGameBG, 0, 0);
+    
+    if(!updated)
+      saveStrings("data/Scores.txt", allStr);
+      
+    updated = true;
+    textSize(50);
+    
+    String returnText = "Press ENTER to return to title screen";
+    int xPos = int(width / 2 - textWidth(returnText) / 2);
+    text(returnText, xPos, 200);
+    text(msg, 400, 350);
+    text("Your score: " + score, 400, 400);
+    text("Top Scores:", 400, 450);
+    
+    int yPos = 500;
+    for(int i = 0; i < 3; i++)
+      text(allStr[i], 400, yPos+=50);
   }
   
   public int getScore(String word) 
@@ -239,6 +289,27 @@ public class Game
       
     System.out.print("\tIncorrect Guesses:" + incorrectGuesses);
     System.out.println();
+  }
+  
+    void reset()
+  {
+      //phraseIndex = int(random(phrases.length));
+      //phrase = phrases[phraseIndex];
+      //hangManWord = phrase.toCharArray();
+      //playerWord = new String[hangManWord.length];
+      
+      isRunning = false;
+      isScoreScreen = false;
+      isGameEnd = false;
+      gameWon = false;
+      updated = false;
+      incorrectGuesses = 0;
+      totalLetters = 0;
+      correctGuesses = 0;
+      textSize(30);
+      guessedLetters = new char[1];
+      
+      init();
   }
   
 }//End game
