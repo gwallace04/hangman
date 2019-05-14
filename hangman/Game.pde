@@ -57,9 +57,6 @@ public class Game
     hangManWord = phrase.toCharArray();
     playerWord = new String[hangManWord.length];
     
-    for(char c : hangManWord)
-      print(c);
-    
     for(int i = 0; i < hangManWord.length; i++)
       if (hangManWord[i] == ' ') playerWord[i] = "/";
       else if (hangManWord[i] == '\'') playerWord[i] = "'";
