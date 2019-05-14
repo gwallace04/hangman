@@ -54,4 +54,7 @@ void keyReleased()
 {
   if((key >= 65 && key <= 90) || (key >= 97 && key <= 122))
       game.keyRelease();
+      
+  if((key == ENTER || key == RETURN) && game.isGameEnd)
+      game.reset();
 }
