@@ -18,7 +18,7 @@ void setup()
   
   //Game setup
   game = new Game();
-  game.init("Avocado");
+  game.init();
   
   //Text stuff
   f = createFont("arial", 16);
