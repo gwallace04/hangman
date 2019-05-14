@@ -7,7 +7,7 @@
 public class Game
 {
   String[] background = {"titlescreen.png", "gamescreen.png"};
-  PImage titleBG, gameBG, currentBG;
+  PImage titleBG, gameBG, currentBG, scoreBG;
   
   boolean isRunning;
   boolean isScoreScreen;
@@ -45,6 +45,7 @@ public class Game
     titleBG = loadImage(background[0]);
     gameBG = loadImage(background[1]);
     currentBG = titleBG;
+    scoreBG = loadImage("scores+background.png");
     phrases = loadStrings("Phrases.txt");
     phraseIndex = int(random(phrases.length));
     phrase = phrases[phraseIndex];
@@ -112,9 +113,17 @@ public class Game
       
     } 
     else if (isScoreScreen) {
-      //image("scores+background.png", 0, 0);
-      background(255);
+      image(scoreBG, 0, 0);
+      //background(255);
+      fill(0);
+      int xPos = 50;
+      int column1 = 225;
       scores = loadStrings("Scores.txt");
+      scores = reverse(sort(scores));
+      text(str(1) + ". " +  scores[0], xPos, column1);
+      //for (int i = 0; i <= 5; i++) {
+      //  text(str(i + 1) + scores[i], 50, 225);
+      //}
       
     }
     else //Show the title screen
@@ -128,7 +137,7 @@ public class Game
     }
   }
   
-  public float getScore(String word) 
+  public int getScore(String word) 
   {
     float wordScore = 0;
     float score = 0;
@@ -138,7 +147,7 @@ public class Game
     }
     score = (float) wordScore / (incorrectGuesses + correctGuesses + 1);
     score *= 100;
-    return score;
+    return (int) score;
   }
 
   private boolean inHitBox(int[] hitBox)
