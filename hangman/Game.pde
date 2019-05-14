@@ -6,8 +6,8 @@
 
 public class Game
 {
-  String[] background = {"titlescreen.png", "gamescreen.png"};
-  PImage titleBG, gameBG, currentBG, scoreBG;
+  String[] background = {"titlescreen.png", "title+background(life-6).png", "title+background(life-5).png", "title+background(life-3).png", "background(life-2).png", "background(life-1).png", "background.png"};
+  PImage titleBG, gameBG, currentBG, scoreBG, life1, life2, life3, life4, life5;
   
   boolean isRunning;
   boolean isScoreScreen;
@@ -44,6 +44,11 @@ public class Game
   {
     titleBG = loadImage(background[0]);
     gameBG = loadImage(background[1]);
+    life1 = loadImage(background[2]);
+    life2 = loadImage(background[3]);
+    life3 = loadImage(background[4]);
+    life4 = loadImage(background[5]);
+    life5 = loadImage(background[6]);
     currentBG = titleBG;
     scoreBG = loadImage("scores+background.png");
     phrases = loadStrings("Phrases.txt");
@@ -100,6 +105,11 @@ public class Game
       //String output = new String(playerWord);
       text(incorrectGuesses, 50, 50);
       text(join(playerWord, " "), 50, 100);
+      if (incorrectGuesses == 1) currentBG = life1;
+      else if (incorrectGuesses == 2) currentBG = life2;
+      else if (incorrectGuesses == 3) currentBG = life3;
+      else if (incorrectGuesses == 4) currentBG = life4;
+      else if (incorrectGuesses == 5) currentBG = life5;
       if (incorrectGuesses >= 6) {
         text("You lose", 50, 200);
         String score = str(getScore(phrase));
