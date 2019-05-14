@@ -116,14 +116,24 @@ public class Game
       image(scoreBG, 0, 0);
       //background(255);
       fill(0);
-      int xPos = 50;
-      int column1 = 225;
+      textSize(50);
+      
+      //Control where the columns of scores appear
+      int column1 = 315;
+      int column2 = 650;
+      int yPos = 375;
+      
+      //Read the scores from "Scores.txt"
       scores = loadStrings("Scores.txt");
       scores = reverse(sort(scores));
-      text(str(1) + ". " +  scores[0], xPos, column1);
-      //for (int i = 0; i <= 5; i++) {
-      //  text(str(i + 1) + scores[i], 50, 225);
-      //}
+      
+      //Display the scores
+      for (int i = 0; i < 5; i++) {
+        text(str(i + 1) + ". " + scores[i], column1, yPos + i*100);
+      }
+      for (int i = 5; i < 10; i++) {
+        text(str(i + 1) + ". " + scores[i], column2, yPos + (i - 5)*100);
+      }
       
     }
     else //Show the title screen
