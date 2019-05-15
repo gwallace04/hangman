@@ -4,6 +4,11 @@
 
 
 */
+
+  
+import processing.sound.*;
+SoundFile file;
+
 Game game;
 PFont f;
 int textX = 10;
@@ -23,6 +28,11 @@ void setup()
   //Text stuff
   f = createFont("arial", 16);
   textFont(f);
+  
+  file = new SoundFile(this, "The_Ecstacy_of_Gold.mp3");
+  file.loop();
+  
+  
 }
 
 void draw()
