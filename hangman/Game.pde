@@ -200,6 +200,9 @@ public class Game
     String returnText = "Press ENTER to return to title screen";
     int xPos = int(width / 2 - textWidth(returnText) / 2);
     text(returnText, xPos, 200);
+    returnText = "The word was \"" + new String(hangManWord) + "\"";
+    xPos = int(width / 2 - textWidth(returnText) / 2);
+    text(returnText, xPos, 250);
     text(msg, 400, 350);
     text("Your score: " + score, 400, 400);
     text("Top Scores:", 400, 450);

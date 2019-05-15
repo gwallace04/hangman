@@ -7,7 +7,7 @@
 
   
 import processing.sound.*;
-SoundFile file;
+SoundFile soundFile;
 
 Game game;
 PFont f;
@@ -29,8 +29,9 @@ void setup()
   f = createFont("arial", 16);
   textFont(f);
   
-  file = new SoundFile(this, "The_Ecstacy_of_Gold.mp3");
-  file.loop();
+  soundFile = new SoundFile(this, "The_Ecstacy_of_Gold.mp3");
+  soundFile.amp(0.25);
+  soundFile.loop();
   
   
 }
@@ -41,7 +42,7 @@ void draw()
   game.update();
  
    //Draw text data
-   fill(255, 0, 255);
+   fill(0, 0, 0);
    //String s1 = "(" + mouseX + ", " + mouseY +") ";
    //text(s1, textX, textY);
 }
