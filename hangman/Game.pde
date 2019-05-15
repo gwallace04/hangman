@@ -137,6 +137,8 @@ public class Game
       //fill(0);
       textSize(50);
       
+      isGameEnd = true;
+      
       //Control where the columns of scores appear
       int column1 = 315;
       int column2 = 650;
