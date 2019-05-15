@@ -218,7 +218,7 @@ public class Game
       wordScore += getLetterScore(letter);
     }
     score = (float) wordScore / (incorrectGuesses + correctGuesses + 1);
-    score *= 100;
+    score *= 1000;
     return (int) score;
   }
 
