@@ -18,9 +18,9 @@ public class Game
   boolean updated;
   
   //Title screen hitboxes 220x60
-  int[] newGameRect = {440, 335, 660, 395};
-  int[] scoreRect = {440, 440, 660, 500};
-  int[] quitRect = {440, 570, 660, 630};
+  int[] newGameRect = {512, 305, 670, 335};
+  int[] scoreRect = {515, 395, 660, 430};
+  int[] quitRect = {520, 470, 660, 530};
   
   int incorrectGuesses = 0;
   char[] hangManWord;
