@@ -134,13 +134,15 @@ public class Game
     else if (isScoreScreen) {
       image(scoreBG, 0, 0);
       //background(255);
-      fill(0);
+      //fill(0);
       textSize(50);
+      
+      isGameEnd = true;
       
       //Control where the columns of scores appear
       int column1 = 315;
       int column2 = 650;
-      int yPos = 375;
+      int yPos = 255;
       
       //Read the scores from "Scores.txt"
       scores = loadStrings("Scores.txt");
@@ -216,7 +218,7 @@ public class Game
       wordScore += getLetterScore(letter);
     }
     score = (float) wordScore / (incorrectGuesses + correctGuesses + 1);
-    score *= 100;
+    score *= 1000;
     return (int) score;
   }
 
