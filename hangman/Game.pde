@@ -226,8 +226,8 @@ public class Game
     {
       wordScore += getLetterScore(letter);
     }
-    score = (float) wordScore / (incorrectGuesses + correctGuesses + 1);
-    score *= 1000;
+    score = (float) (wordScore + 2*correctGuesses) / (incorrectGuesses + 1);
+    score *= 100;
     return (int) score;
   }
 
