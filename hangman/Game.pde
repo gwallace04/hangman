@@ -27,6 +27,7 @@ public class Game
   String[] playerWord;
   String[] phrases;
   String[] scores;
+  int[] scoresDisplay;
   int phraseIndex;
   String phrase;
   int totalLetters;
@@ -146,14 +147,16 @@ public class Game
       
       //Read the scores from "Scores.txt"
       scores = loadStrings("Scores.txt");
-      scores = reverse(sort(scores));
+      scoresDisplay = new int[scores.length];
+      for (int i = 0; i < scores.length; i++) scoresDisplay[i] = int(scores[i]); 
+      scoresDisplay = reverse(sort(scoresDisplay));
       
       //Display the scores
       for (int i = 0; i < 5; i++) {
-        text(str(i + 1) + ". " + scores[i], column1, yPos + i*100);
+        text(str(i + 1) + ". " + scoresDisplay[i], column1, yPos + i*100);
       }
       for (int i = 5; i < 10; i++) {
-        text(str(i + 1) + ". " + scores[i], column2, yPos + (i - 5)*100);
+        text(str(i + 1) + ". " + scoresDisplay[i], column2, yPos + (i - 5)*100);
       }
       
     }
@@ -178,11 +181,14 @@ public class Game
     image(endGameBG, 0, 0);
     String msg = "Nothing";
     String[] allStr = loadStrings("Scores.txt");
+    scoresDisplay = new int[allStr.length+1];
+    for (int i = 0; i < allStr.length; i++) scoresDisplay[i] = int(allStr[i]); 
+    scoresDisplay[allStr.length] = getScore(phrase);
     ArrayList<String> myList = new ArrayList<String>(Arrays.asList(allStr));
 
     myList.add(score);
     allStr = myList.toArray(allStr);
-    allStr = reverse(sort(allStr));
+    scoresDisplay = reverse(sort(scoresDisplay));
     
     if(gameWon)
       msg = "You won!";
@@ -209,7 +215,7 @@ public class Game
     
     int yPos = 500;
     for(int i = 0; i < 3; i++)
-      text(allStr[i], 400, yPos+=50);
+      text(scoresDisplay[i], 400, yPos+=50);
   }
   
   public int getScore(String word) 
@@ -292,7 +298,7 @@ public class Game
     //for(char c : playerWord)
     //  System.out.print(c);
       
-    System.out.print("\tIncorrect Guesses:" + incorrectGuesses);
+    //System.out.print("\tIncorrect Guesses:" + incorrectGuesses);
     System.out.println();
   }
   
